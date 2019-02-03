@@ -1,0 +1,1 @@
+../10_a_team/10_setup_a_team.sh

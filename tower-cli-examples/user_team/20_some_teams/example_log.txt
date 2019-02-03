@@ -1,0 +1,226 @@
+ssato@x1-carbon-gen6% ./20_some_teams/20_setup_some_teams.sh
++ CURDIR=./20_some_teams
++ tower-cli team create --name System_B_Team --organization Default --description 'Team develop and maintain System B'
+Resource changed.
+== ============= ============
+id     name      organization
+== ============= ============
+10 System_B_Team            1
+== ============= ============
++ tower-cli team create --name X_System_Team --organization Default --description 'Virtual Team crosssing System A and B'
+Resource changed.
+== ============= ============
+id     name      organization
+== ============= ============
+11 X_System_Team            1
+== ============= ============
++ tower-cli project create --name system_B_project --organization Default --description 'Playbooks and roles for System B' --scm-type git --scm-url https://github.com/ansible/ansible-tower-samples --monitor
+------Starting Standard Out Stream------
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [all] *********************************************************************
+
+
+TASK [delete project directory before update] **********************************
+skipping: [localhost]
+
+TASK [check repo using git] ****************************************************
+skipping: [localhost]
+
+TASK [update project using git] ************************************************
+changed: [localhost]
+
+TASK [Set the git repository version] ******************************************
+ok: [localhost]
+
+TASK [update project using hg] *************************************************
+skipping: [localhost]
+
+TASK [Set the hg repository version] *******************************************
+skipping: [localhost]
+
+TASK [parse hg version string properly] ****************************************
+skipping: [localhost]
+
+TASK [update project using svn] ************************************************
+skipping: [localhost]
+
+TASK [Set the svn repository version] ******************************************
+skipping: [localhost]
+
+TASK [parse subversion version string properly] ********************************
+skipping: [localhost]
+
+TASK [Ensure the project directory is present] *********************************
+skipping: [localhost]
+
+TASK [Fetch Insights Playbook(s)] **********************************************
+skipping: [localhost]
+
+TASK [Save Insights Version] ***************************************************
+skipping: [localhost]
+
+TASK [Repository Version] ******************************************************
+ok: [localhost] => {
+    "msg": "Repository Version 347e44fea036c94d5f60e544de006453ee5c71ad"
+}
+
+TASK [Write Repository Version] ************************************************
+changed: [localhost]
+
+PLAY [all] *********************************************************************
+
+TASK [detect requirements.yml] *************************************************
+skipping: [localhost]
+
+TASK [fetch galaxy roles from requirements.yml] ********************************
+skipping: [localhost]
+
+TASK [fetch galaxy roles from requirements.yml (forced update)] ****************
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=4    changed=2    unreachable=0    failed=0
+
+------End of Standard Out Stream--------
+Resource changed.
+== ================ ======== ================================================ =====================
+id       name       scm_type                     scm_url                           local_path
+== ================ ======== ================================================ =====================
+42 system_B_project git      https://github.com/ansible/ansible-tower-samples _42__system_b_project
+== ================ ======== ================================================ =====================
++ tower-cli inventory create --name System_B_Inventory --organization Default
+Resource changed.
+== ================== ============
+id        name        organization
+== ================== ============
+13 System_B_Inventory            1
+== ================== ============
++ tower-cli host create --name 127.0.0.1 --inventory System_B_Inventory
+Resource changed.
+== ========= ========= =======
+id   name    inventory enabled
+== ========= ========= =======
+18 127.0.0.1        13    true
+== ========= ========= =======
++ tower-cli group create --name system_B --inventory System_B_Inventory
+Resource changed.
+== ======== =========
+id   name   inventory
+== ======== =========
+11 system_B        13
+== ======== =========
++ tower-cli credential create --name System_B_Cred --team System_B_Team --organization Default --credential-type Machine --inputs '{}'
+Resource changed.
+== ============= ===============
+id     name      credential_type
+== ============= ===============
+11 System_B_Cred               1
+== ============= ===============
++ tower-cli job_template create --name system_B_setup --inventory System_B_Inventory --credential System_B_Cred --project system_B_project --playbook hello_world.yml
+Resource changed.
+== ============== ========= ======= ===============
+id      name      inventory project    playbook
+== ============== ========= ======= ===============
+43 system_B_setup        13      42 hello_world.yml
+== ============== ========= ======= ===============
++ tower-cli user create --username tbadmin --password pass --email tbadmin@example.com --first-name TeamB --last-name Admin
+== ======== =================== ========== ========= ============ =================
+id username        email        first_name last_name is_superuser is_system_auditor
+== ======== =================== ========== ========= ============ =================
+19 tbadmin  tbadmin@example.com TeamB      Admin            false             false
+== ======== =================== ========== ========= ============ =================
++ tower-cli user create --username bob --password pass --email bob@example.com --first-name Mr --last-name Bob
+Resource changed.
+== ======== =============== ========== ========= ============ =================
+id username      email      first_name last_name is_superuser is_system_auditor
+== ======== =============== ========== ========= ============ =================
+21 bob      bob@example.com Mr         Bob              false             false
+== ======== =============== ========== ========= ============ =================
++ tower-cli team associate --team System_B_Team --user tbadmin
+OK. (changed: true)
++ tower-cli team associate --team System_B_Team --user bob
+OK. (changed: true)
++ tower-cli team associate --team System_B_Team --user jane
+OK. (changed: true)
++ tower-cli team associate --team X_System_Team --user jane
+OK. (changed: true)
++ tower-cli team associate --team X_System_Team --user john
+OK. (changed: true)
++ tower-cli role grant --team System_B_Team --type use --project hello_project
+Resource changed.
+=== ==== ==== =======
+id  team type project
+=== ==== ==== =======
+219   10 use       36
+=== ==== ==== =======
++ tower-cli role grant --team System_B_Team --type use --project system_B_project
+Resource changed.
+=== ==== ==== =======
+id  team type project
+=== ==== ==== =======
+273   10 use       42
+=== ==== ==== =======
++ tower-cli role grant --team System_B_Team --type use --inventory System_B_Inventory
+Resource changed.
+=== ==== ==== =========
+id  team type inventory
+=== ==== ==== =========
+278   10 use         13
+=== ==== ==== =========
++ tower-cli role grant --team System_B_Team --type use --credential System_B_Cred
+=== ==== ==== ==========
+id  team type credential
+=== ==== ==== ==========
+282   10 use          11
+=== ==== ==== ==========
++ tower-cli role grant --team System_B_Team --type execute --job-template system_B_setup
+Resource changed.
+=== ==== ======= ============
+id  team  type   job_template
+=== ==== ======= ============
+284   10 execute           43
+=== ==== ======= ============
++ tower-cli role grant --team X_System_Team --type read --job-template system_B_setup
+Resource changed.
+=== ==== ==== ============
+id  team type job_template
+=== ==== ==== ============
+283   11 read           43
+=== ==== ==== ============
++ tower-cli role grant --user tbadmin --type admin --project system_B_project
+Resource changed.
+=== ==== ===== =======
+id  user type  project
+=== ==== ===== =======
+271   19 admin      42
+=== ==== ===== =======
++ tower-cli role grant --user tbadmin --type admin --inventory System_B_Inventory
+Resource changed.
+=== ==== ===== =========
+id  user type  inventory
+=== ==== ===== =========
+276   19 admin        13
+=== ==== ===== =========
++ tower-cli role grant --user tbadmin --type admin --job-template system_B_setup
+Resource changed.
+=== ==== ===== ============
+id  user type  job_template
+=== ==== ===== ============
+285   19 admin           43
+=== ==== ===== ============
++ tower-cli role grant --user jane --type admin --inventory System_B_Inventory
+Resource changed.
+=== ==== ===== =========
+id  user type  inventory
+=== ==== ===== =========
+276   17 admin        13
+=== ==== ===== =========
++ tower-cli role grant --user john --type admin --project system_B_project
+Resource changed.
+=== ==== ===== =======
+id  user type  project
+=== ==== ===== =======
+271   16 admin      42
+=== ==== ===== =======
+ssato@x1-carbon-gen6%
