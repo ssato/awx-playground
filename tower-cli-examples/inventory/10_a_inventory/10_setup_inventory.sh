@@ -17,7 +17,6 @@ tower-cli project create --name test_vars_project --organization Default \
 tower-cli inventory create --name local_inv --organization Default
 tower-cli inventory_source create --name local_inv_src --inventory local_inv \
   --source scm --source-path hosts --source-project test_vars_project \
-  --update-on-project-update true \
   --overwrite true --overwrite-vars true --update-on-launch true
 
 # Job templates
