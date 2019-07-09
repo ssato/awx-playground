@@ -21,7 +21,7 @@ id   name    organization
 == ========= ============
 15 local_inv            1
 == ========= ============
-+ tower-cli inventory_source create --name local_inv_src --source scm --source-path hosts --source-project test_vars_project --overwrite true --update-on-launch true --inventory local_inv
++ + tower-cli inventory_source create --name local_inv_src --inventory local_inv --source scm --source-path hosts --source-project test_vars_project --update-on-project-update true --overwrite true --overwrite-vars true --update-on-launch true
 Resource changed.
 == ============= ========= ======
 id     name      inventory source
