@@ -2,12 +2,12 @@
 - name: Get information of installed java
   command: java -version
   ignore_errors: true
-  change_when: false
+  changed_when: false
   register: result
 
 - name: Debug result of the previous task
   debug:
-    var: result.stderr_line
+    var: result.stderr_lines
     verbosity: 2  # Only when -vv or above
 
 - name: Test if Java is installed and newer enough
@@ -17,7 +17,7 @@
       - >
         {{ result.stderr_lines[0] |
            regex_replace('^.*version "([^"]+)"$', '\1')
-           is version(java_min_version) }}
+           is version(java_min_version, '>=') }}
     fail_msg: |
       Java >= {{ java_min_version }} is required but not installed
       or older one, ({{ result.stderr_lines[0] }} was found.
