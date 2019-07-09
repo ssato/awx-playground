@@ -20,6 +20,6 @@ tower-cli inventory_source create --name local_inv_src --organization Default \
 
 # Job templates
 tower-cli job_template create --name test_vars --inventory local_inv_src \
-  --project test_vars_project --playbook test_vars.yml
+  --project test_vars_project --playbook playbooks/test_vars.yml
 
 # vim:sw=2:ts=2:et:
