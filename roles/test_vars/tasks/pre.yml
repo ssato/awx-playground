@@ -1,0 +1,9 @@
+---
+- name: Print out vars
+  debug:
+    msg: |
+      a = {{ a | default('undefined') }}
+      b = {{ b | default('undefined') }}
+      c = {{ c | to_json if c | default(false) else 'undefined' }}
+
+# vim:sw=2:ts=2:et:
