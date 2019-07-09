@@ -1,5 +1,6 @@
 ---
 - name: Test Vars
   hosts: local
+  gather_facts: false
   roles:
     - test_vars
