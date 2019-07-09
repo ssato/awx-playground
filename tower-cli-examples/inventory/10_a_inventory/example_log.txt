@@ -1,0 +1,37 @@
+ssato@x1-carbon-gen6% bash -x ./tower-cli-examples/inventory/10_a_inventory/10_setup_inventory.sh
+        ...
++ set -ex
++ timeout 5 tower-cli version
++ tower-cli organization create --name Default
+== =======
+id  name
+== =======
+ 1 Default
+== =======
++ tower-cli project create --name test_vars_project --organization Default --monitor --scm-type git --scm-url https://github.com/ssato/awx-playground
+== ================= ======== ======================================= ======================
+id       name        scm_type                 scm_url                       local_path
+== ================= ======== ======================================= ======================
+50 test_vars_project git      https://github.com/ssato/awx-playground _50__test_vars_project
+== ================= ======== ======================================= ======================
++ tower-cli inventory create --name local_inv --organization Default
+Resource changed.
+== ========= ============
+id   name    organization
+== ========= ============
+15 local_inv            1
+== ========= ============
++ tower-cli inventory_source create --name local_inv_src --source scm --source-path hosts --source-project test_vars_project --overwrite true --update-on-launch true --inventory local_inv
+Resource changed.
+== ============= ========= ======
+id     name      inventory source
+== ============= ========= ======
+53 local_inv_src        15 scm
+== ============= ========= ======
++ tower-cli job_template create --name test_vars --inventory local_inv --project test_vars_project --playbook playbooks/test_vars.yml
+== ========= ========= ======= =======================
+id   name    inventory project        playbook
+== ========= ========= ======= =======================
+52 test_vars None           50 playbooks/test_vars.yml
+== ========= ========= ======= =======================
+ssato@x1-carbon-gen6%                                                                ~/repos/public/github.com/ssato/awx-playground.git
