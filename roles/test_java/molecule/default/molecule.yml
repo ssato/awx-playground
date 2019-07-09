@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  # https://access.redhat.com/containers/#/product/5c180b28bed8bd75a2c29a63
+  # https://developers.redhat.com/blog/2019/05/31/working-with-red-hat-enterprise-linux-universal-base-images-ubi/
+  #- name: instance
+  #  image: registry.redhat.io/ubi7/ubi:latest
+  - name: instance
+    image: centos:7
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

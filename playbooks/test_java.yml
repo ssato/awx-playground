@@ -1,0 +1,6 @@
+---
+- name: Test Java
+  hosts: local
+  gather_facts: false
+  roles:
+    - test_java
