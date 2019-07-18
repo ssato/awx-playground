@@ -1,0 +1,78 @@
+ssato@x1-carbon-gen6% (cd roles/test_java; sudo molecule converge)                   ~/repos/public/github.com/ssato/awx-playground.git
+--> Validating schema /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    ├── dependency
+    ├── create
+    ├── prepare
+    └── converge
+
+--> Scenario: 'default'
+--> Action: 'dependency'
+Skipping, missing the requirements file.
+--> Scenario: 'default'
+--> Action: 'create'
+Skipping, instances already created.
+--> Scenario: 'default'
+--> Action: 'prepare'
+Skipping, prepare playbook not configured.
+--> Scenario: 'default'
+--> Action: 'converge'
+
+    PLAY [Converge] ****************************************************************
+
+    TASK [Gathering Facts] *********************************************************
+    ok: [instance]
+
+    TASK [test_java : include_tasks] ***********************************************
+    included: /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/tasks/pre.yml for instance
+
+    TASK [test_java : Test vars are defined and not empty] *************************
+    ok: [instance] => {
+        "changed": false,
+        "msg": "All assertions passed"
+    }
+
+    TASK [test_java : include_tasks] ***********************************************
+    included: /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/tasks/test_java.yml for instance
+
+    TASK [test_java : Get information of installed java] ***************************
+    ok: [instance]
+
+    TASK [test_java : Debug result of the previous task] ***************************
+    skipping: [instance]
+
+    TASK [test_java : Test if Java is installed and newer enough] ******************
+    ok: [instance] => {
+        "changed": false,
+        "msg": "All assertions passed"
+    }
+
+    PLAY RECAP *********************************************************************
+    instance                   : ok=6    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+
+ssato@x1-carbon-gen6% (cd roles/test_java; sudo molecule verify)                     ~/repos/public/github.com/ssato/awx-playground.git
+--> Validating schema /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    └── verify
+
+--> Scenario: 'default'
+--> Action: 'verify'
+--> Executing Testinfra tests found in /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/tests/...
+    ============================= test session starts ==============================
+    platform linux -- Python 3.7.3, pytest-3.9.3, py-1.7.0, pluggy-0.8.1 -- /usr/bin/python3
+    rootdir: /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default, inifile:
+    plugins: testinfra-3.0.5, xdist-1.27.0, virtualenv-1.2.11, shutil-1.2.6, forked-1.0.1, cov-2.6.0
+collected 1 item
+
+    tests/test_default.py::test_facts[ansible://instance] PASSED             [100%]
+
+    =========================== 1 passed in 1.10 seconds ===========================
+Verifier completed successfully.
+ssato@x1-carbon-gen6%                                                                ~/repos/public/github.com/ssato/awx-playground.git
