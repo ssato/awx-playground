@@ -1,0 +1,9 @@
+---
+- name: Print out vars
+  debug:
+    msg: |
+      a = {{ foo.a }}
+      b = {{ foo.b }}
+      c = {{ foo.c | to_json }}
+
+# vim:sw=2:ts=2:et:
