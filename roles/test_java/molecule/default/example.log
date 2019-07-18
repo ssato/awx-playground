@@ -1,3 +1,19 @@
+ssato@x1-carbon-gen6% (cd roles/test_java; sudo molecule lint)                       ~/repos/public/github.com/ssato/awx-playground.git
+--> Validating schema /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    └── lint
+
+--> Scenario: 'default'
+--> Action: 'lint'
+--> Executing Yamllint on files found in /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/...
+Lint completed successfully.
+--> Executing Flake8 on files found in /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/tests/...
+Lint completed successfully.
+--> Executing Ansible Lint on /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/playbook.yml...
+Lint completed successfully.
 ssato@x1-carbon-gen6% (cd roles/test_java; sudo molecule converge)                   ~/repos/public/github.com/ssato/awx-playground.git
 --> Validating schema /home/ssato/repos/public/github.com/ssato/awx-playground.git/roles/test_java/molecule/default/molecule.yml.
 Validation completed successfully.
